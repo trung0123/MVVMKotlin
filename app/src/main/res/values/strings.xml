@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">AskbeKotlin</string>
+
+    <string name="facebook_app_id">2144330185889347</string>
+    <string name="fb_login_protocol_scheme">fb2144330185889347</string>
+
+    <!-- Login -->
+    <string name="login_with_facebook">Facebookでログイン</string>
+    <string name="mail_address">メールアドレス</string>
+    <string name="password">パスワード</string>
+    <string name="login">ログイン</string>
+    <string name="register">新規登録</string>
+    <string name="request_forgot_pass">パスワードをお忘れの方</string>
+
+    <!-- Register -->
+    <string name="first_name">姓</string>
+    <string name="last_name">名</string>
+    <string name="nickname">ニックネーム</string>
+    <string name="email">メールアドレス</string>
+    <string name="re_password">パスワード確認</string>
+    <string name="accept_register">利用規約に同意して新規登録</string>
+    <string name="term_of_use">利用規約</string>
+</resources>

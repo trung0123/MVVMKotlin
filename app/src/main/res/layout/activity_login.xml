@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        tools:context=".ui.login.LoginActivity">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_55sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_login_facebook"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            facebook:com_facebook_login_text="@string/login_with_facebook" />
+
+        <RelativeLayout
+            android:id="@+id/tv_line"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/btn_login_facebook"
+            app:layout_constraintStart_toStartOf="@id/btn_login_facebook"
+            app:layout_constraintTop_toBottomOf="@id/btn_login_facebook">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/white"
+                android:paddingLeft="@dimen/_12sdp"
+                android:paddingRight="@dimen/_12sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="or"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edt_login_email"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_line"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_stroke_edittext"
+            android:hint="@string/mail_address"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_8sdp"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="@id/btn_login_facebook"
+            app:layout_constraintTop_toBottomOf="@id/tv_line" />
+
+        <EditText
+            android:id="@+id/edt_login_password"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edt_login_email"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_stroke_edittext"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="@dimen/_8sdp"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="@id/btn_login_facebook"
+            app:layout_constraintTop_toBottomOf="@id/edt_login_email" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_below="@id/edt_login_password"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/blue_deep_sky_2"
+            android:text="@string/login"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="@id/btn_login_facebook"
+            app:layout_constraintTop_toBottomOf="@id/edt_login_password" />
+
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/request_forgot_pass"
+            android:textColor="@color/royal_blue"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="@id/btn_login_facebook"
+            app:layout_constraintTop_toBottomOf="@id/btn_login" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_below="@id/tv_forgot_password"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/orange_logo"
+            android:text="@string/register"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="@id/btn_login_facebook"
+            app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#08256e</color>
+    <color name="colorPrimaryDark">#061C55</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="orange_logo">#f17d2c</color>
+    <color name="blue_logo">#53B8EE</color>
+
+    <color name="light_gray">#D3D3D3</color>
+    <color name="gray_55">#555555</color>
+    <color name="gray">#BEBEBE</color>
+    <color name="gray_2">#9C9C9C</color>
+    <color name="blue_deep_sky_2">#38ACEC</color>
+    <color name="royal_blue">#4169E1</color>
+
+</resources>
