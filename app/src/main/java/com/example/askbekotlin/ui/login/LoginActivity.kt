@@ -1,15 +1,32 @@
 package com.example.askbekotlin.ui.login
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.example.askbekotlin.R
 import com.example.askbekotlin.databinding.ActivityLoginBinding
+import com.example.askbekotlin.ui.base.BaseVMActivity
+import com.example.askbekotlin.ui.main.MainActivity
+import com.example.askbekotlin.utils.Preference
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : BaseVMActivity<LoginViewModel>(), View.OnClickListener {
 
     private lateinit var binding: ActivityLoginBinding
+
+    override fun providerVMClass(): Class<LoginViewModel>? = LoginViewModel::class.java
+
+    private var token by Preference(Preference.USER_TOKEN, "")
+    private var code by Preference(Preference.USER_CODE, "")
+
+    companion object {
+        fun getStartIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,13 +40,39 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnRegister.setOnClickListener(this)
     }
 
+    override fun startObserve() {
+        mViewModel.apply {
+            mLoginData.observe(this@LoginActivity, Observer {
+                token = it.token!!
+                code = it.code!!
+                toMainPage()
+            })
+
+            mError.observe(this@LoginActivity, Observer {
+                when (it.code) {
+                    "DUPLICATE_EMAIL" -> showErrorMessage(getString(R.string.error_login_duplicate_email))
+                    "LOGIN_FAIL" -> showErrorMessage(getString(R.string.error_login_fail))
+                    else -> handleApiError(it)
+                }
+            })
+        }
+    }
+
+    private fun toMainPage() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     override fun onClick(p0: View?) {
-        when(p0?.id){
+        when (p0?.id) {
             R.id.btn_login -> login()
         }
     }
 
     private fun login() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val username = binding.edtLoginEmail.text.toString().trim()
+        val password = binding.edtLoginPassword.text.toString().trim()
+        mViewModel.login(username, password, "")
     }
 }

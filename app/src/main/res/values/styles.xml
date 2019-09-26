@@ -21,4 +21,8 @@
         <item name="colorControlNormal">@color/blue_logo</item>
     </style>
 
+    <style name="AppTheme.ProgressBar">
+        <item name="colorAccent">@color/progress_bar_gray</item> <!-- Whatever color you want-->
+    </style>
+
 </resources>

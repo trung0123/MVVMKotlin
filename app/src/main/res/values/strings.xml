@@ -11,6 +11,8 @@
     <string name="login">ログイン</string>
     <string name="register">新規登録</string>
     <string name="request_forgot_pass">パスワードをお忘れの方</string>
+    <string name="error_login_duplicate_email">既に使われているメールアドレスのためログインできません。</string>
+    <string name="error_login_fail">メールアドレスまたはパスワードが間違っています</string>
 
     <!-- Register -->
     <string name="first_name">姓</string>

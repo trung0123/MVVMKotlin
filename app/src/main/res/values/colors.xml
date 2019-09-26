@@ -13,5 +13,6 @@
     <color name="gray_2">#9C9C9C</color>
     <color name="blue_deep_sky_2">#38ACEC</color>
     <color name="royal_blue">#4169E1</color>
+    <color name="progress_bar_gray">#363636</color>
 
 </resources>
