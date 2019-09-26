@@ -10,6 +10,7 @@ import com.example.askbekotlin.R
 import com.example.askbekotlin.databinding.ActivityLoginBinding
 import com.example.askbekotlin.ui.base.BaseVMActivity
 import com.example.askbekotlin.ui.main.MainActivity
+import com.example.askbekotlin.ui.register.RegisterActivity
 import com.example.askbekotlin.utils.Preference
 
 class LoginActivity : BaseVMActivity<LoginViewModel>(), View.OnClickListener {
@@ -67,6 +68,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btn_login -> login()
+            R.id.btn_register -> toRegisterAccount()
         }
     }
 
@@ -74,5 +76,11 @@ class LoginActivity : BaseVMActivity<LoginViewModel>(), View.OnClickListener {
         val username = binding.edtLoginEmail.text.toString().trim()
         val password = binding.edtLoginPassword.text.toString().trim()
         mViewModel.login(username, password, "")
+    }
+
+    private fun toRegisterAccount() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
     }
 }

@@ -2,7 +2,9 @@ package com.example.askbekotlin.data.api
 
 import com.example.askbekotlin.data.model.BaseResponse
 import com.example.askbekotlin.data.model.DataLogin
+import com.example.askbekotlin.data.model.Fullname
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -33,16 +35,16 @@ interface AppService {
 //        @Field("auth_token") tokenFCM: String
 //    ): Call<BaseResponse<DataLogin>>
 
-//    @POST("user/signup")
-//    abstract fun signUp(@Body registerRequest: RegisterRequest): Call<BaseResponse>
-//
-//    class RegisterRequest(
-//        private val fullname: Fullname,
-//        private val nickname: String,
-//        private val email: String,
-//        private val password: String
-//    )
-//
+    @POST("user/signup")
+    suspend fun signUp(@Body registerRequest: RegisterRequest): BaseResponse<Any>
+
+    class RegisterRequest(
+        private val fullname: Fullname,
+        private val nickname: String,
+        private val email: String,
+        private val password: String
+    )
+
 //    @Multipart
 //    @POST("retrofit/upload")
 //    abstract fun upload(@Part file: MultipartBody.Part): Call<BaseResponse>

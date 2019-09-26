@@ -22,4 +22,10 @@
     <string name="re_password">パスワード確認</string>
     <string name="accept_register">利用規約に同意して新規登録</string>
     <string name="term_of_use">利用規約</string>
+    <string name="error_register_password_length">パスワードは8文字以上のみ登録可能です。</string>
+    <string name="error_register_password_empty">パスワードを入力してください。</string>
+    <string name="error_register_repassword">確認用パスワードが一致していません。</string>
+    <string name="error_register_email">メールアドレスの形式が正しくありません。</string>
+    <string name="error_register_duplicate_email">このメールアドレスは既に登録されています</string>
+    <string name="error_register_duplicate_nickname">このニックネームは既に使用されています。</string>
 </resources>
