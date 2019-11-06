@@ -7,6 +7,8 @@
     <color name="orange_logo">#f17d2c</color>
     <color name="blue_logo">#53B8EE</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="light_gray">#D3D3D3</color>
     <color name="gray_55">#555555</color>
     <color name="gray">#BEBEBE</color>
@@ -14,5 +16,13 @@
     <color name="blue_deep_sky_2">#38ACEC</color>
     <color name="royal_blue">#4169E1</color>
     <color name="progress_bar_gray">#363636</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#3949AB</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="pink">#FF68C0</color>
+
+    // user detail
+    <color name="authenticated">#FF8800</color>
+    <color name="unauthenticated">#9E9E9E</color>
 
 </resources>

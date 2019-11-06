@@ -1,13 +1,7 @@
 package com.example.askbekotlin.data.api
 
-import com.example.askbekotlin.data.model.BaseResponse
-import com.example.askbekotlin.data.model.DataLogin
-import com.example.askbekotlin.data.model.Fullname
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import com.example.askbekotlin.data.model.*
+import retrofit2.http.*
 
 interface AppService {
     companion object {
@@ -55,10 +49,10 @@ interface AppService {
 //        @Part file: MultipartBody.Part,
 //        @PartMap partMap: Map<String, RequestBody>
 //    ): Call<BaseResponse>
-//
-//    @FormUrlEncoded
-//    @POST("user/reset-password")
-//    abstract fun resetPassword(@Field("email") email: String): Call<BaseResponse>
+
+    @FormUrlEncoded
+    @POST("user/reset-password")
+    suspend fun resetPassword(@Field("email") email: String): BaseResponse<Any>
 //
 //    @FormUrlEncoded
 //    @POST("user/change-password")
@@ -131,18 +125,18 @@ interface AppService {
 //
 //    @GET("user/get-review-data")
 //    abstract fun getReviewData(): Call<BaseResponse<HomeReview>>
-//
-//    @GET("home")
-//    abstract fun getHome(): Call<BaseResponse<DataHome>>
-//
-//    @GET("home")
-//    abstract fun getHomeByCategory(@Query("bcate") id: String): Call<BaseResponse<DataHome>>
-//
-//    @GET("home/get-numof-notifies")
-//    abstract fun getNumOfNotifies(
-//        @Query("types[1]") type1: String, @Query("types[2]") type2: String,
-//        @Query("types[3]") type3: String, @Query("types[4]") type4: String
-//    ): Call<BaseResponse<DataTotal>>
+
+    @GET("home")
+    suspend fun getHome(): BaseResponse<DataHome>
+
+    @GET("home")
+    suspend fun getHomeByCategory(@Query("bcate") id: String): BaseResponse<DataHome>
+
+    @GET("home/get-numof-notifies")
+    suspend fun getNumOfNotifies(
+        @Query("types[1]") type1: String, @Query("types[2]") type2: String,
+        @Query("types[3]") type3: String, @Query("types[4]") type4: String
+    ): BaseResponse<DataTotal>
 //
 //    @GET("teacher-category?get_tree=2")
 //    abstract fun getTeacherCategory(): Call<BaseResponse<List<CateTeacher>>>
@@ -163,7 +157,7 @@ interface AppService {
 //    @GET("teacher/register")
 //    abstract fun getTeacherInfo(): Call<BaseResponse<DataTeacherRegister>>
 //
-//    @GET("lesson?limit=20")
+//    @GET("mOverallRankLessons?limit=20")
 //    abstract fun getLessonByCategory(
 //        @Query("keyword") keyword: String,
 //        @Query("big_cate_id") bigId: String,
@@ -175,67 +169,67 @@ interface AppService {
 //        @QueryMap filterMethod: Map<String, String>
 //    ): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson/my?limit=20")
+//    @GET("mOverallRankLessons/my?limit=20")
 //    abstract fun getMyLesson(@Query("page") page: Int): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson?limit=20&type=monthly_ranking")
+//    @GET("mOverallRankLessons?limit=20&type=monthly_ranking")
 //    abstract fun getPopularLessons(@Query("page") page: Int, @Query("big_cate_id") cate: String): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson?limit=20&type=recommend")
+//    @GET("mOverallRankLessons?limit=20&type=recommend")
 //    abstract fun getRecommendLessons(@Query("page") page: Int, @Query("big_cate_id") cate: String): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson?limit=20&type=new_ranking")
+//    @GET("mOverallRankLessons?limit=20&type=new_ranking")
 //    abstract fun getNewArrivalLessons(@Query("page") page: Int, @Query("big_cate_id") cate: String): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson?type=weekly_ranking")
+//    @GET("mOverallRankLessons?type=weekly_ranking")
 //    abstract fun getWeeklyRankingLessons(
 //        @Query("page") page: Int, @Query("big_cate_id") cate: String,
 //        @Query("limit") limit: Int
 //    ): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson?limit=20&type=point_ranking&type_order=desc")
+//    @GET("mOverallRankLessons?limit=20&type=point_ranking&type_order=desc")
 //    abstract fun getUserDetailLessons(@Query("user_id") id: String, @Query("page") page: Int): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson/selling?limit=20")
+//    @GET("mOverallRankLessons/selling?limit=20")
 //    abstract fun getLessonSelling(@Query("page") page: Int): Call<BaseResponse<DataLessonSelling>>
 //
-//    @GET("lesson/buying?limit=20")
+//    @GET("mOverallRankLessons/buying?limit=20")
 //    abstract fun getLessonBuying(@Query("page") page: Int): Call<BaseResponse<DataLessonSelling>>
 //
-//    @GET("lesson/bought?limit=20")
+//    @GET("mOverallRankLessons/bought?limit=20")
 //    abstract fun getLessonBought(@Query("page") page: Int): Call<BaseResponse<BaseData<Order>>>
 //
-//    @GET("lesson/sold?limit=20")
+//    @GET("mOverallRankLessons/sold?limit=20")
 //    abstract fun getLessonSold(@Query("page") page: Int): Call<BaseResponse<BaseData<Order>>>
 //
-//    @GET("lesson/detail")
-//    abstract fun getLesson(@Query("lss_id") id: String): Call<BaseResponse<Lesson>>
+//    @GET("mOverallRankLessons/detail")
+//    abstract fun getMOverallRankLessons(@Query("lss_id") id: String): Call<BaseResponse<Lesson>>
 //
-//    @GET("lesson/detail?get_teacher=0&get_review=0&get_evt=1")
+//    @GET("mOverallRankLessons/detail?get_teacher=0&get_review=0&get_evt=1")
 //    abstract fun getLessonReservation(@Query("lss_id") id: String): Call<BaseResponse<Lesson>>
 //
 //
-//    @GET("lesson/get-more-review")
+//    @GET("mOverallRankLessons/get-more-review")
 //    abstract fun getMoreReview(
 //        @Query("lss_id") id: String,
 //        @Query("page") page: Int
 //    ): Call<BaseResponse<BaseData<ItemReview>>>
 //
-//    @GET("lesson/get-evt-infor")
+//    @GET("mOverallRankLessons/get-evt-infor")
 //    abstract fun getEventInfo(
 //        @Query("lss_id") id: String,
 //        @Query("start") start: String,
 //        @Query("end") end: String
 //    ): Call<BaseResponse<EventInfo>>
 //
-//    @GET("lesson/get-order-events")
+//    @GET("mOverallRankLessons/get-order-events")
 //    abstract fun getOrderEvents(
 //        @Query("lss_id") id: String,
 //        @Query("start") start: String,
 //        @Query("end") end: String
 //    ): Call<BaseResponse<Event>>
 //
-//    @GET("lesson/order-completed-support")
+//    @GET("mOverallRankLessons/order-completed-support")
 //    abstract fun getLessonCompleted(@Query("id") id: String): Call<BaseResponse<LessonCompletedData>>
 //
 //    @GET("logs?limit=20")
@@ -247,7 +241,7 @@ interface AppService {
 //        @Query("to_time") toTime: String
 //    ): Call<BaseResponse<BaseData<Lesson>>>
 //
-//    @GET("lesson/favorite?limit=10")
+//    @GET("mOverallRankLessons/favorite?limit=10")
 //    abstract fun getLessonFavorite(@Query("page") page: Int): Call<BaseResponse<BaseData<Lesson>>>
 //
 //    @FormUrlEncoded
@@ -255,19 +249,19 @@ interface AppService {
 //    abstract fun readNotify(@Field("id") id: String, @Field("type") type: String): Call<BaseResponse>
 //
 //    @FormUrlEncoded
-//    @POST("lesson/un-public")
+//    @POST("mOverallRankLessons/un-public")
 //    abstract fun privateLesson(@Field("id") id: String): Call<BaseResponse>
 //
 //    @FormUrlEncoded
-//    @POST("lesson/duplicate")
+//    @POST("mOverallRankLessons/duplicate")
 //    abstract fun duplicateLesson(@Field("id") id: String): Call<BaseResponse>
 //
 //    @FormUrlEncoded
-//    @POST("lesson/delete")
+//    @POST("mOverallRankLessons/delete")
 //    abstract fun deleteLesson(@Field("lss_id") id: String): Call<BaseResponse>
 //
 //    @FormUrlEncoded
-//    @POST("lesson/post-review")
+//    @POST("mOverallRankLessons/post-review")
 //    abstract fun postReview(
 //        @Field("ol_id") id: String,
 //        @Field("score") score: Double,
@@ -300,7 +294,7 @@ interface AppService {
 //    @POST("reserv/reject-order")
 //    abstract fun rejectOrder(@Field("id") id: String): Call<BaseResponse>
 //
-//    @POST("lesson/order-event")
+//    @POST("mOverallRankLessons/order-event")
 //    abstract fun orderEvent(@Body orderEventRequest: OrderEventRequest): Call<BaseResponse<ObjectId>>
 //
 //    class OrderEventRequest(
@@ -311,28 +305,28 @@ interface AppService {
 //    )
 //
 //    @Multipart
-//    @POST("lesson/add")
+//    @POST("mOverallRankLessons/add")
 //    abstract fun addLesson(
 //        @PartMap partMap: Map<String, RequestBody>,
 //        @Part files: List<MultipartBody.Part>
 //    ): Call<BaseResponse<DataLessonAdd>>
 //
 //    @Multipart
-//    @POST("lesson/edit")
+//    @POST("mOverallRankLessons/edit")
 //    abstract fun editLesson(
 //        @PartMap partMap: Map<String, RequestBody>,
 //        @Part files: List<MultipartBody.Part>
 //    ): Call<BaseResponse<DataLessonAdd>>
 //
 //    @FormUrlEncoded
-//    @POST("lesson/toggle-like")
+//    @POST("mOverallRankLessons/toggle-like")
 //    abstract fun likeLesson(
 //        @Field("id") id: String,
 //        @Field("price") price: Int
 //    ): Call<BaseResponse<DataBlockLike>>
 //
 //    @FormUrlEncoded
-//    @POST("lesson/toggle-good-bad")
+//    @POST("mOverallRankLessons/toggle-good-bad")
 //    abstract fun goodBadLesson(
 //        @Field("lss_id") id: String,
 //        @Field("is_good") i: Int
@@ -349,7 +343,7 @@ interface AppService {
 //    ): Call<BaseResponse>
 //
 //    @FormUrlEncoded
-//    @POST("lesson/report")
+//    @POST("mOverallRankLessons/report")
 //    abstract fun reportLesson(
 //        @Field("lss_id") id: String,
 //        @Field("ol_id") orderId: String,

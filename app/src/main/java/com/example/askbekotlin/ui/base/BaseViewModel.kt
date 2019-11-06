@@ -13,6 +13,8 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
 
     val mException: MutableLiveData<Throwable> = MutableLiveData()
 
+    val mProgress: MutableLiveData<Boolean> = MutableLiveData()
+
     fun launch(block: suspend CoroutineScope.() -> Unit) {
         launchOnUI {
             tryCatch(block, {}, {}, true)
@@ -34,6 +36,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                 tryBlock()
             } catch (e: Throwable) {
                 if (e !is CancellationException || handleCancellationExceptionManually) {
+                    mProgress.value = false
                     mException.value = e
                     catchBlock(e)
                 } else {

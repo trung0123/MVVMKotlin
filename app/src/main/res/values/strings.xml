@@ -9,6 +9,7 @@
     <string name="mail_address">メールアドレス</string>
     <string name="password">パスワード</string>
     <string name="login">ログイン</string>
+    <string name="email_not_valid">メールアドレスの形式が正しくありません。</string>
     <string name="register">新規登録</string>
     <string name="request_forgot_pass">パスワードをお忘れの方</string>
     <string name="error_login_duplicate_email">既に使われているメールアドレスのためログインできません。</string>
@@ -28,4 +29,12 @@
     <string name="error_register_email">メールアドレスの形式が正しくありません。</string>
     <string name="error_register_duplicate_email">このメールアドレスは既に登録されています</string>
     <string name="error_register_duplicate_nickname">このニックネームは既に使用されています。</string>
+
+    <!-- ForgotPass -->
+    <string name="forgot_password">パスワード再発行</string>
+
+    <string name="see_more">さらに見る</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

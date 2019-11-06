@@ -1,5 +1,6 @@
 package com.example.askbekotlin.ui.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem
@@ -7,21 +8,24 @@ import android.view.View
 import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.example.askbekotlin.R
 import com.example.askbekotlin.databinding.ActivityRegisterBinding
 import com.example.askbekotlin.ui.base.BaseVMActivity
+import com.example.askbekotlin.ui.WebViewActivity
+import com.example.askbekotlin.utils.DialogUtil
 import com.example.askbekotlin.utils.SimpleTextWatcher
 
 class RegisterActivity : BaseVMActivity<RegisterViewModel>(), View.OnClickListener {
 
     private lateinit var binding: ActivityRegisterBinding
+    override fun providerVMClass(): Class<RegisterViewModel>? = RegisterViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
         setupToolbar()
         setEvents()
-
     }
 
     private fun setupToolbar() {
@@ -72,6 +76,40 @@ class RegisterActivity : BaseVMActivity<RegisterViewModel>(), View.OnClickListen
         }
     }
 
+    override fun startObserve() {
+        super.startObserve()
+
+        mViewModel.apply {
+            mData.observe(this@RegisterActivity, Observer {
+                if (it) {
+                    toLoginPage()
+                }
+            })
+
+            mError.observe(this@RegisterActivity, Observer {
+                when (it.code) {
+                    "DUPLICATE_EMAIL" -> showErrorMessage(getString(R.string.error_register_duplicate_email))
+                    "DUPLICATE_NICKNAME" -> showErrorMessage(getString(R.string.error_register_duplicate_nickname))
+                    else -> handleApiError(it)
+                }
+            })
+        }
+    }
+
+    private fun toLoginPage() {
+        DialogUtil.showSimpleDialog(
+            this,
+            "",
+            "ご登録いただいたメールアドレスに認証メールをお送りいたしました。メール内のリンクをクリックしてご登録を完了してください。",
+            "確認",
+            object : DialogUtil.SimpleDialogInterface {
+                override fun positiveButtonPressed() {
+                    NavUtils.navigateUpFromSameTask(this@RegisterActivity)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right)
+                }
+            })
+    }
+
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.tv_term_of_use -> toWebView()
@@ -95,14 +133,20 @@ class RegisterActivity : BaseVMActivity<RegisterViewModel>(), View.OnClickListen
     }
 
     private fun toWebView() {
-//        val intent = Intent(baseContext, WebViewActivity::class.java)
-//        intent.putExtra(WebViewActivity.URL, "https://test.askbe.net/term-of-service")
-//        startActivity(intent)
+        val intent = Intent(baseContext, WebViewActivity::class.java)
+        intent.putExtra(WebViewActivity.URL, "https://test.askbe.net/term-of-service")
+        startActivity(intent)
     }
 
     private fun registerAccount() {
         if (validateUserRegister()) {
-
+            mViewModel.register(
+                binding.edtRegisterFirstName.text.toString(),
+                binding.edtRegisterLastName.text.toString(),
+                binding.edtRegisterNickname.text.toString(),
+                binding.edtRegisterEmail.text.toString(),
+                binding.edtRegisterPassword.text.toString()
+            )
         }
     }
 
@@ -147,6 +191,5 @@ class RegisterActivity : BaseVMActivity<RegisterViewModel>(), View.OnClickListen
         }
         return isValid
     }
-
 
 }

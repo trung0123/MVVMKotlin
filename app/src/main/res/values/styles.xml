@@ -25,4 +25,8 @@
         <item name="colorAccent">@color/progress_bar_gray</item> <!-- Whatever color you want-->
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
 </resources>

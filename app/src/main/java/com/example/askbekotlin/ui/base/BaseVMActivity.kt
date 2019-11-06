@@ -1,5 +1,6 @@
 package com.example.askbekotlin.ui.base
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleObserver
@@ -31,11 +32,22 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity(), Lifecyc
 
 
     open fun startObserve() {
-        mViewModel.mException.observe(this, Observer {
-            it?.let {
-                onError(it)
-            }
-        })
+
+        mViewModel.apply {
+            mException.observe(this@BaseVMActivity, Observer {
+                it?.let {
+                    onError(it)
+                }
+            })
+
+            mProgress.observe(this@BaseVMActivity, Observer {
+                if (it) {
+                    DialogUtil.showProgress(this@BaseVMActivity)
+                } else {
+                    DialogUtil.dismiss()
+                }
+            })
+        }
     }
 
     open fun onError(e: Throwable) {
@@ -64,4 +76,6 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity(), Lifecyc
         }
         super.onDestroy()
     }
+
+
 }

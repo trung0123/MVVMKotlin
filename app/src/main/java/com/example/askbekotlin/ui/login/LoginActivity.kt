@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.example.askbekotlin.R
 import com.example.askbekotlin.databinding.ActivityLoginBinding
 import com.example.askbekotlin.ui.base.BaseVMActivity
+import com.example.askbekotlin.ui.forgotPassword.ForgotPasswordActivity
 import com.example.askbekotlin.ui.main.MainActivity
 import com.example.askbekotlin.ui.register.RegisterActivity
 import com.example.askbekotlin.utils.Preference
@@ -42,6 +43,8 @@ class LoginActivity : BaseVMActivity<LoginViewModel>(), View.OnClickListener {
     }
 
     override fun startObserve() {
+        super.startObserve()
+
         mViewModel.apply {
             mLoginData.observe(this@LoginActivity, Observer {
                 token = it.token!!
@@ -69,6 +72,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>(), View.OnClickListener {
         when (p0?.id) {
             R.id.btn_login -> login()
             R.id.btn_register -> toRegisterAccount()
+            R.id.tv_forgot_password -> toForgotPassword()
         }
     }
 
@@ -80,6 +84,12 @@ class LoginActivity : BaseVMActivity<LoginViewModel>(), View.OnClickListener {
 
     private fun toRegisterAccount() {
         val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
+    }
+
+    private fun toForgotPassword() {
+        val intent = Intent(this, ForgotPasswordActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
     }
