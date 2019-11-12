@@ -15,11 +15,11 @@ class ForgotPasswordViewModel : BaseViewModel() {
 
     fun resetPassword(email: String) {
         launch {
-            mProgress.value = true
+            mLoading.value = true
             val result = withContext(Dispatchers.IO) {
                 repository.resetPassword(email)
             }
-            mProgress.value = false
+            mLoading.value = false
             if (result.success) {
                 mData.value = true
             } else {

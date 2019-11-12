@@ -19,12 +19,15 @@ class HomeViewModel : BaseViewModel() {
     val mCategories: MutableLiveData<List<Category>> = MutableLiveData()
     val mDataTotal: MutableLiveData<DataTotal> = MutableLiveData()
     val mError: MutableLiveData<ErrorBundle> = MutableLiveData()
+    val mWeeklyLoadMoreRankLesson:MutableLiveData<List<Lesson>> = MutableLiveData()
 
     fun loadHome() {
         launch {
+            mProgress.value = true
             val result = withContext(Dispatchers.IO) {
                 repository.loadHome()
             }
+            mProgress.value = false
             if (result.success) {
                 // Xu ly thanh cong
                 mData.value = result.data
@@ -56,15 +59,30 @@ class HomeViewModel : BaseViewModel() {
 
     fun loadHomeByCategory(cateId: String) {
         launch {
+            mProgress.value = true
             val result = withContext(Dispatchers.IO) {
                 repository.loadHomeByCategory(cateId)
             }
+            mProgress.value = false
             if (result.success) {
                 mOverallRankLessons.value = result.data.overallRankLessons
                 mRecommendLessons.value = result.data.recommendLessons
                 mNewestLessons.value = result.data.newestLessons
                 mNextLesson.value = result.data.nextLesson
                 mWeeklyRankLesson.value = result.data.weeklyRankLessons
+            } else {
+                mError.value = ErrorBundle(result.code, result.msg)
+            }
+        }
+    }
+
+    fun getListWeeklyRankingLesson(page: Int, cate: String, limit: Int) {
+        launch {
+            val result = withContext(Dispatchers.IO){
+                repository.getListWeeklyRankingLesson(page, cate, limit)
+            }
+            if(result.success){
+                mWeeklyLoadMoreRankLesson.value = result.data.items
             } else {
                 mError.value = ErrorBundle(result.code, result.msg)
             }

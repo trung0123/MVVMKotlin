@@ -1,12 +1,8 @@
 package com.example.askbekotlin.ui.main
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -16,7 +12,9 @@ import com.example.askbekotlin.R
 import com.example.askbekotlin.databinding.ActivityMainBinding
 import com.example.askbekotlin.ui.base.BaseVMActivity
 import com.example.askbekotlin.utils.KeyboardUtils
+import kotlinx.android.synthetic.main.abs_layout.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_bottom_navigation.*
 
 class MainActivity : BaseVMActivity<MainViewModel>() {
 
@@ -24,14 +22,13 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
     private lateinit var binding: ActivityMainBinding
     override fun providerVMClass(): Class<MainViewModel>? = MainViewModel::class.java
 
-    private lateinit var imgHam: ImageView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setupNavigation()
 
+        changeBottomColor(1)
         eventAddBackStackFragment()
     }
 
@@ -67,11 +64,11 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
         supportFragmentManager.addOnBackStackChangedListener {
             KeyboardUtils.hideKeyboard(this)
             if (supportFragmentManager.backStackEntryCount > 0) {
-                imgHam.visibility = View.VISIBLE
+                img_toolbar_open_drawer.visibility = View.VISIBLE
 //                imgHam.setOnClickListener { drawer.openDrawer(GravityCompat.START) }
 
                 // show back button
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//                supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 // Animation back button
 //                ObjectAnimator.ofFloat(
 //                    actionBarDrawerToggle.getDrawerArrowDrawable(),
@@ -85,12 +82,12 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
 //                    onBackPressed()
 //                })
 //
-//                changeBottomColor()
+                changeBottomColor()
 
             } else {
-                //show hamburger
-                supportActionBar?.setDisplayHomeAsUpEnabled(false)
-                imgHam.visibility = View.GONE
+//                //show hamburger
+//                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                img_toolbar_open_drawer.visibility = View.GONE
                 // Animation hamburger button
 //                ObjectAnimator.ofFloat(
 //                    actionBarDrawerToggle.getDrawerArrowDrawable(),
@@ -100,6 +97,69 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
 //                actionBarDrawerToggle.syncState()
 //
 //                toolbar.setNavigationOnClickListener({ v -> drawer.openDrawer(GravityCompat.START) })
+            }
+        }
+    }
+
+//    fun addFragmentLessonDetail(id: String, @SLIDE type: Int) {
+//        getTransaction(type)
+//            .addToBackStack(LessonDetailFragment.TAG)
+//            .replace(
+//                R.id.frame_content, LessonDetailFragment.newInstance(id),
+//                LessonDetailFragment.TAG
+//            )
+//            .commitAllowingStateLoss()
+//    }
+
+    private fun changeBottomColor() {
+        img_main_home.setBackgroundResource(R.drawable.home)
+        tv_main_home.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+        img_main_lesson_creation.setBackgroundResource(R.drawable.lesson_creation)
+        tv_main_lesson_creation.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+        img_main_my_schedule.setBackgroundResource(R.drawable.my_schedule)
+        tv_main_my_schedule.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+        img_main_reservation_pay.setBackgroundResource(R.drawable.reservation_pay)
+        tv_main_reservation_pay.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+        img_main_search.setBackgroundResource(R.drawable.search)
+        tv_main_search.setTextColor(ContextCompat.getColor(this, R.color.black))
+    }
+
+    private fun changeBottomColor(pos: Int) {
+        changeBottomColor()
+        when (pos) {
+            1 -> {
+                img_main_home.setBackgroundResource(R.drawable.home_cover)
+                tv_main_home.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            }
+            2 -> {
+                img_main_lesson_creation.setBackgroundResource(R.drawable.lesson_creation_cover)
+                tv_main_lesson_creation.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorPrimary
+                    )
+                )
+            }
+            3 -> {
+                img_main_my_schedule.setBackgroundResource(R.drawable.my_schedule_cover)
+                tv_main_my_schedule.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            }
+            4 -> {
+                img_main_reservation_pay.setBackgroundResource(R.drawable.reservation_pay_cover)
+                tv_main_reservation_pay.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorPrimary
+                    )
+                )
+            }
+            5 -> {
+                img_main_search.setBackgroundResource(R.drawable.search_cover)
+                tv_main_search.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             }
         }
     }

@@ -16,11 +16,11 @@ class LoginViewModel : BaseViewModel() {
 
     fun login(username: String, password: String, token: String) {
         launch {
-            mProgress.value = true
+            mLoading.value = true
             val result = withContext(Dispatchers.IO) {
                 repository.login(username, password, token)
             }
-            mProgress.value = false
+            mLoading.value = false
             if (result.success) {
                 // Xu ly thanh cong
                 mLoginData.value = result.data

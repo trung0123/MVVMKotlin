@@ -2,29 +2,38 @@ package com.example.askbekotlin.ui.home
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.example.askbekotlin.R
 import com.example.askbekotlin.adapter.ImitationLoopPagerAdapter
+import com.example.askbekotlin.adapter.LessonListAdapter
 import com.example.askbekotlin.adapter.RecommendLessonAdapter
 import com.example.askbekotlin.databinding.FragmentHomeBinding
 import com.example.askbekotlin.ui.base.BaseVMFragment
 import com.example.askbekotlin.utils.Utils
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
+import kotlinx.android.synthetic.main.layout_reload.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class HomeFragment : BaseVMFragment<HomeViewModel>(), View.OnClickListener {
+
+    companion object {
+        val TAG = HomeFragment::class.java.simpleName
+    }
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -62,6 +71,14 @@ class HomeFragment : BaseVMFragment<HomeViewModel>(), View.OnClickListener {
 
     private lateinit var tvTotalMessage: TextView
 
+    private var loading = true
+    private var pastVisibleItems: Int = 0
+    private var visibleItemCount: Int = 0
+    private var totalItemCount: Int = 0
+    private var page = 1
+    private val limit = 10
+    private var isContLoadMore = true
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -80,6 +97,7 @@ class HomeFragment : BaseVMFragment<HomeViewModel>(), View.OnClickListener {
         binding.cateId = cateId
         binding.lifecycleOwner = this
         mViewModel.loadHome()
+        initLoadMoreWeeklyRankLessonCate()
     }
 
     private fun setEvents() {
@@ -114,9 +132,9 @@ class HomeFragment : BaseVMFragment<HomeViewModel>(), View.OnClickListener {
                         mViewModel.loadHome()
                     } else {
                         bcate = cateId
-//                        loading = true
-//                        isContLoadMore = true
-//                        page = 1
+                        loading = true
+                        isContLoadMore = true
+                        page = 1
                         mViewModel.loadHomeByCategory(cateId)
                     }
                 }
@@ -176,7 +194,67 @@ class HomeFragment : BaseVMFragment<HomeViewModel>(), View.OnClickListener {
             mError.observe(this@HomeFragment, Observer {
                 handleApiError(it)
             })
+
+            mProgress.observe(this@HomeFragment, Observer {
+                if (it) {
+                    pb_loading.visibility = View.VISIBLE
+                    binding.homeContent.visibility = View.GONE
+                } else {
+                    pb_loading.visibility = View.GONE
+                    binding.homeContent.visibility = View.VISIBLE
+                }
+            })
+
+            mWeeklyLoadMoreRankLesson.observe(this@HomeFragment, Observer {
+                binding.pbRvLoading.visibility = View.GONE
+                loading = true
+                if (it.size < limit) {
+                    stopLoadMore()
+                }
+                val adapter = binding.rvHomeWeeklyRankLesson.adapter as LessonListAdapter
+                adapter.addLessons(it)
+            })
         }
+    }
+
+    private fun stopLoadMore() {
+        isContLoadMore = false
+        binding.pbRvLoading.visibility = View.GONE
+    }
+
+    private fun initLoadMoreWeeklyRankLessonCate() {
+        binding.scvHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                Log.i(TAG, "BOTTOM SCROLL")
+                if (!isContLoadMore) {
+                    return@OnScrollChangeListener
+                }
+                if (binding.rvHomeWeeklyRankLesson.adapter is LessonListAdapter) {
+                    val adapter = binding.rvHomeWeeklyRankLesson.adapter as LessonListAdapter
+                    if (adapter.itemCount % 10 != 0) {
+                        Log.d("Weekly Rank Lesson", "onScrolled: " + adapter.itemCount)
+                        binding.pbRvLoading.visibility = View.GONE
+                        return@OnScrollChangeListener
+                    }
+                }
+
+                if (binding.rvHomeWeeklyRankLesson.layoutManager is GridLayoutManager) {
+                    val gridLayoutManager =
+                        binding.rvHomeWeeklyRankLesson.layoutManager as GridLayoutManager
+                    visibleItemCount = gridLayoutManager.childCount
+                    totalItemCount = gridLayoutManager.itemCount
+                    pastVisibleItems = gridLayoutManager.findFirstVisibleItemPosition()
+
+                    if (loading && isContLoadMore) {
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                            binding.pbRvLoading.visibility = View.VISIBLE
+                            loading = false
+                            mViewModel.getListWeeklyRankingLesson(++page, bcate!!, limit)
+                        }
+                    }
+                }
+            }
+        })
     }
 
 

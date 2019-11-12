@@ -28,22 +28,24 @@
             app:rtl_tabSelectedTextColor="#53B8EE" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scv_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/home_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_10sdp"
+                    android:visibility="gone"
                     app:categories="@{viewModel.mCategories}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -485,10 +487,10 @@
                     android:layout_height="@dimen/_55sdp"
                     android:orientation="horizontal"
                     android:visibility="visible"
-                    app:visibilityByCateId="@{cateId}"
                     app:layout_constraintEnd_toStartOf="@id/home_content"
                     app:layout_constraintStart_toStartOf="@id/home_content"
-                    app:layout_constraintTop_toBottomOf="@id/textView6">
+                    app:layout_constraintTop_toBottomOf="@id/textView6"
+                    app:visibilityByCateId="@{cateId}">
 
                     <LinearLayout
                         android:id="@+id/ll_home_lesson_creation"
@@ -698,13 +700,13 @@
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_5sdp"
-                        app:visibilityByCateId="@{cateId}"
                         android:text="ウィークリーランキング"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10ssp"
                         app:layout_constraintEnd_toStartOf="@id/btn_home_more_rank_lesson"
                         app:layout_constraintStart_toStartOf="@id/constraintLayout5"
-                        app:layout_constraintTop_toTopOf="@id/constraintLayout5" />
+                        app:layout_constraintTop_toTopOf="@id/constraintLayout5"
+                        app:visibilityByCateId="@{cateId}" />
 
                     <Button
                         android:id="@+id/btn_home_more_rank_lesson"
@@ -712,12 +714,12 @@
                         android:layout_height="@dimen/_20sdp"
                         android:background="@color/blue_logo"
                         android:text="@string/see_more"
-                        app:visibilityByCateId="@{cateId}"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_10ssp"
                         app:layout_constraintEnd_toEndOf="@id/constraintLayout5"
                         app:layout_constraintStart_toEndOf="@id/tv_home_weekly_rank_lesson"
-                        app:layout_constraintTop_toTopOf="@id/constraintLayout5" />
+                        app:layout_constraintTop_toTopOf="@id/constraintLayout5"
+                        app:visibilityByCateId="@{cateId}" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -730,8 +732,21 @@
                         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_lesson"
                         tools:orientation="horizontal" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_rv_loading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:theme="@style/AppTheme.ProgressBar"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/constraintLayout5"
+                        app:layout_constraintEnd_toEndOf="@id/constraintLayout5"
+                        app:layout_constraintTop_toBottomOf="@id/rv_home_weekly_rank_lesson" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <include layout="@layout/layout_reload" />
     </LinearLayout>
 </layout>

@@ -4,6 +4,13 @@
     <string name="facebook_app_id">2144330185889347</string>
     <string name="fb_login_protocol_scheme">fb2144330185889347</string>
 
+    <!-- Bottom Naviagtion -->
+    <string name="title_home">ホーム</string>
+    <string name="title_lesson_creation">レッスン作成</string>
+    <string name="title_my_schedule">マイスケジュール</string>
+    <string name="title_reservation_pay">予約状況</string>
+    <string name="title_lesson_search">レッスン検索</string>
+
     <!-- Login -->
     <string name="login_with_facebook">Facebookでログイン</string>
     <string name="mail_address">メールアドレス</string>

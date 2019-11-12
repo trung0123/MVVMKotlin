@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.askbekotlin.R
 import com.example.askbekotlin.data.model.Lesson
+import com.example.askbekotlin.ui.home.HomeFragmentDirections
 import com.example.askbekotlin.utils.Utils
 import java.text.MessageFormat
 import java.util.*
@@ -131,21 +134,17 @@ open class RecommendLessonAdapter :
             )
             tvFeeTime.text = feeTime
 
-            lesson.campaign?.let {
-                if (it.code != null) {
-                    tvCampaign.text = MessageFormat.format("{0}%", lesson.campaign!!.`val`)
-                    tvCampaign.visibility = View.VISIBLE
-                } else {
-                    tvCampaign.visibility = View.GONE
-                }
+            if (lesson.campaign != null && lesson.campaign?.code != null) {
+                tvCampaign.text = MessageFormat.format("{0}%", lesson.campaign?.`val`)
+                tvCampaign.visibility = View.VISIBLE
+            } else {
+                tvCampaign.visibility = View.GONE
             }
 
-            lesson.coupon?.let {
-                if (it.code != null) {
-                    tvCoupon.text = MessageFormat.format("{0}%", it.`val`)
-                } else {
-                    tvCoupon.visibility = View.GONE
-                }
+            if (lesson.coupon != null && lesson.coupon?.code != null) {
+                tvCoupon.text = MessageFormat.format("{0}%", lesson.coupon?.`val`)
+            } else {
+                tvCoupon.visibility = View.GONE
             }
 
             val user = lesson.user
@@ -193,7 +192,11 @@ open class RecommendLessonAdapter :
             }
 
             itemView.setOnClickListener {
+                //                val mainActivity = itemView.context as MainActivity
+//                mainActivity.addFragmentLessonDetail(lesson.getId(), SLIDE.LEFT_RIGHT)
 
+                Navigation.findNavController(itemView)
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToLessonDetailFragment())
             }
 
 

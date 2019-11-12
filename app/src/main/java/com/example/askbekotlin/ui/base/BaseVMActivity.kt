@@ -1,6 +1,5 @@
 package com.example.askbekotlin.ui.base
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleObserver
@@ -40,7 +39,7 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity(), Lifecyc
                 }
             })
 
-            mProgress.observe(this@BaseVMActivity, Observer {
+            mLoading.observe(this@BaseVMActivity, Observer {
                 if (it) {
                     DialogUtil.showProgress(this@BaseVMActivity)
                 } else {

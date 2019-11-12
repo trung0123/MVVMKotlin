@@ -46,7 +46,7 @@ abstract class BaseVMFragment<VM : BaseViewModel> : Fragment() {
         }
     }
 
-    fun showErrorMessage(message: String) {
+    private fun showErrorMessage(message: String) {
         DialogUtil.showSimpleDialog(mActivity, "", message, "確認")
     }
 

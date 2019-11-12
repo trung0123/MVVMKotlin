@@ -1,9 +1,7 @@
 package com.example.askbekotlin.data.repository
 
 import com.example.askbekotlin.data.api.RetrofitClient
-import com.example.askbekotlin.data.model.BaseResponse
-import com.example.askbekotlin.data.model.DataHome
-import com.example.askbekotlin.data.model.DataTotal
+import com.example.askbekotlin.data.model.*
 
 class HomeRepository : BaseRepository() {
 
@@ -22,5 +20,9 @@ class HomeRepository : BaseRepository() {
 
     suspend fun loadHomeByCategory(cateId: String): BaseResponse<DataHome> {
         return apiCall { RetrofitClient.service.getHomeByCategory(cateId) }
+    }
+
+    suspend fun getListWeeklyRankingLesson(page: Int, cate: String, limit: Int):BaseResponse<BaseData<Lesson>>{
+        return apiCall { RetrofitClient.service.getWeeklyRankingLessons(page, cate, limit) }
     }
 }
